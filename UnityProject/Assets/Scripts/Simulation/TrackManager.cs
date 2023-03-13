@@ -73,8 +73,15 @@ public class TrackManager : MonoBehaviour
                 //Update appearance
                 if (BestCar != null)
                     BestCar.SpriteRenderer.sprite = NormalCarSprite;
+                    value.TrailRenderer.time = 1f;
+                    value.TrailRenderer.startColor = Color.yellow;
+                    value.TrailRenderer.endColor = Color.yellow;
+
                 if (value != null)
                     value.SpriteRenderer.sprite = BestCarSprite;
+                    value.TrailRenderer.startColor = Color.magenta;
+                    value.TrailRenderer.endColor = Color.magenta;
+                    value.TrailRenderer.time = 100;
 
                 //Set previous best to be second best now
                 CarController previousBest = bestCar;

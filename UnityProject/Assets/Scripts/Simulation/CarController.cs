@@ -25,7 +25,7 @@ public class CarController : MonoBehaviour
     #endregion
 
     // Maximum delay in seconds between the collection of two checkpoints until this car dies.
-    private const float MAX_CHECKPOINT_DELAY = 3;
+    private const float MAX_CHECKPOINT_DELAY = 4.5f;
 
     /// <summary>
     /// The underlying AI agent of this car.
@@ -73,6 +73,15 @@ public class CarController : MonoBehaviour
         private set;
     }
 
+    /// <summary>
+    /// The cached TrailRenderer of this car.
+    /// </summary>
+    public TrailRenderer TrailRenderer
+    {
+        get;
+        private set;
+    }
+
     private Sensor[] sensors;
     private float timeSinceLastCheckpoint;
     #endregion
@@ -84,6 +93,7 @@ public class CarController : MonoBehaviour
         Movement = GetComponent<CarMovement>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
         sensors = GetComponentsInChildren<Sensor>();
+        TrailRenderer = GetComponentInChildren<TrailRenderer>();
     }
     void Start()
     {
