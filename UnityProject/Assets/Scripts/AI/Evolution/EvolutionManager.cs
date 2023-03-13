@@ -103,6 +103,7 @@ public class EvolutionManager : MonoBehaviour
     /// </summary>
     public void StartEvolution()
     {
+        Debug.Log("Starting Evolution");
         //Create neural network to determine parameter count
         NeuralNetwork nn = new NeuralNetwork(FNNTopology);
 
@@ -118,6 +119,7 @@ public class EvolutionManager : MonoBehaviour
             geneticAlgorithm.Selection = GeneticAlgorithm.DefaultSelectionOperator;
             geneticAlgorithm.Recombination = RandomRecombination;
             geneticAlgorithm.Mutation = MutateAllButBestTwo;
+            Debug.Log("Using elitist selection");
         }
         else
         {   
@@ -125,6 +127,7 @@ public class EvolutionManager : MonoBehaviour
             geneticAlgorithm.Selection = RemainderStochasticSampling;
             geneticAlgorithm.Recombination = RandomRecombination;
             geneticAlgorithm.Mutation = MutateAllButBestTwo;
+            Debug.Log("Using remainder stochastic sampling");
         }
         
         AllAgentsDied += geneticAlgorithm.EvaluationFinished;
@@ -135,6 +138,7 @@ public class EvolutionManager : MonoBehaviour
             statisticsFileName = "Evaluation - " + GameStateManager.Instance.TrackName + " " + DateTime.Now.ToString("yyyy_MM_dd_HH-mm-ss");
             WriteStatisticsFileStart();
             geneticAlgorithm.FitnessCalculationFinished += WriteStatisticsToFile;
+            Debug.Log("Saving statistics to file");
         }
         geneticAlgorithm.FitnessCalculationFinished += CheckForTrackFinished;
 
@@ -143,6 +147,7 @@ public class EvolutionManager : MonoBehaviour
         {
             geneticAlgorithm.TerminationCriterion += CheckGenerationTermination;
             geneticAlgorithm.AlgorithmTerminated += OnGATermination;
+            Debug.Log("Restarting genetic logic after " + RestartAfter + " generations");
         }
 
         geneticAlgorithm.Start();
@@ -151,8 +156,10 @@ public class EvolutionManager : MonoBehaviour
     // Writes the starting line to the statistics file, stating all genetic algorithm parameters.
     private void WriteStatisticsFileStart()
     {
+
         File.WriteAllText(statisticsFileName + ".txt", "Evaluation of a Population with size " + PopulationSize + 
                 ", on Track \"" + GameStateManager.Instance.TrackName + "\", using the following GA operators: " + Environment.NewLine +
+                "MaxCheckpointDelay: " + Environment.NewLine + 
                 "Selection: " + geneticAlgorithm.Selection.Method.Name + Environment.NewLine +
                 "Recombination: " + geneticAlgorithm.Recombination.Method.Name + Environment.NewLine +
                 "Mutation: " + geneticAlgorithm.Mutation.Method.Name + Environment.NewLine + 
@@ -180,21 +187,17 @@ public class EvolutionManager : MonoBehaviour
         {
             if (genotype.Evaluation >= 1)
             {
-                if (!Directory.Exists(saveFolder))
-                    Directory.CreateDirectory(saveFolder);
-
-                genotype.SaveToFile(saveFolder + "Genotype - Finished as " + (++genotypesSaved) + ".txt");
-
-                if (genotypesSaved >= SaveFirstNGenotype) return;
+                Directory.CreateDirectory(saveFolder);
+                File.WriteAllText(saveFolder + "Genotype " + genotypesSaved + ".txt", genotype.ToString());
+                genotypesSaved++;
             }
-            else
-                return; //List should be sorted, so we can exit here
         }
     }
 
     // Checks whether the termination criterion of generation count was met.
     private bool CheckGenerationTermination(IEnumerable<Genotype> currentPopulation)
     {
+        Debug.Log("Generation count: " + geneticAlgorithm.GenerationCount);
         return geneticAlgorithm.GenerationCount >= RestartAfter;
     }
 
@@ -202,7 +205,7 @@ public class EvolutionManager : MonoBehaviour
     private void OnGATermination(GeneticAlgorithm ga)
     {
         AllAgentsDied -= ga.EvaluationFinished;
-
+        Debug.Log("Evolution algorithm terminated after " + ga.GenerationCount + " generations.");
         RestartAlgorithm(5.0f);
     }
 
@@ -210,6 +213,7 @@ public class EvolutionManager : MonoBehaviour
     private void RestartAlgorithm(float wait)
     {
         Invoke("StartEvolution", wait);
+        Debug.Log("Restarting evolution algorithm in " + wait + " seconds.");
     }
 
     // Starts the evaluation by first creating new agents from the current population and then restarting the track manager.
@@ -236,13 +240,14 @@ public class EvolutionManager : MonoBehaviour
             AgentsAliveCount++;
             agents[i].AgentDied += OnAgentDied;
         }
-
+        Debug.Log("Restarting track with: " + AgentsAliveCount + " agents alive.");
         TrackManager.Instance.Restart();
     }
 
     // Callback for when an agent died.
     private void OnAgentDied(Agent agent)
     {
+        // Debug.Log("Agent died");
         AgentsAliveCount--;
 
         if (AgentsAliveCount == 0 && AllAgentsDied != null)
@@ -275,6 +280,7 @@ public class EvolutionManager : MonoBehaviour
                 intermediatePopulation.Add(new Genotype(genotype.GetParameterCopy()));
         }
 
+    
         return intermediatePopulation;
     }
 
@@ -309,6 +315,7 @@ public class EvolutionManager : MonoBehaviour
                 newPopulation.Add(offspring2);
         }
 
+        Debug.Log("New population size: " + newPopulation.Count);
         return newPopulation;
     }
 
@@ -329,6 +336,7 @@ public class EvolutionManager : MonoBehaviour
         {
             if (randomizer.NextDouble() < GeneticAlgorithm.DefMutationPerc)
                 GeneticAlgorithm.MutateGenotype(genotype, GeneticAlgorithm.DefMutationProb, GeneticAlgorithm.DefMutationAmount);
+                Debug.Log("Mutated genotype to default" + genotype);
         }
     }
     #endregion

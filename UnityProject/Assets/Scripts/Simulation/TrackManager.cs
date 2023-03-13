@@ -73,8 +73,11 @@ public class TrackManager : MonoBehaviour
                 //Update appearance
                 if (BestCar != null)
                     BestCar.SpriteRenderer.sprite = NormalCarSprite;
+
                 if (value != null)
                     value.SpriteRenderer.sprite = BestCarSprite;
+                    // best car is the car that is furthest in the track
+                    // Debug.Log("Best car is: " + value.name);
 
                 //Set previous best to be second best now
                 CarController previousBest = bestCar;
@@ -135,6 +138,12 @@ public class TrackManager : MonoBehaviour
     #region Constructors
     void Awake()
     {
+
+        // Set the time scale to 16x to speed up the simulation. This is not necessary, but makes it easier to see what is going on.
+        Time.timeScale = 32.0f;
+        // ZAMAN HIZLANDIRMA
+
+
         if (Instance != null)
         {
             Debug.LogError("Mulitple instance of TrackManager are not allowed in one Scene.");
@@ -240,6 +249,15 @@ public class TrackManager : MonoBehaviour
     {
         for (int i = 0; i < cars.Count; i++)
             yield return cars[i].Car;
+    }
+
+    /// <summary>
+    /// gets MAX_DELTA_TIME from the car controller
+    /// </summary>
+    /// <returns></returns>
+    public float GetMaxDeltaTime()
+    {
+        return cars[0].Car.MAX_CHECKPOINT_DELAY;
     }
 
     /// <summary>
