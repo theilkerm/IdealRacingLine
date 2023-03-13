@@ -30,16 +30,16 @@ public class EvolutionManager : MonoBehaviour
 
     // How many of the first to finish the course should be saved to file, to be set in Unity Editor
     [SerializeField]
-    private uint SaveFirstNGenotype = 0;
+    private uint SaveFirstNGenotype = 1;
     private uint genotypesSaved = 0;
 
     // Population size, to be set in Unity Editor
     [SerializeField]
-    private int PopulationSize = 30;
+    private int PopulationSize = 3;
 
     // After how many generations should the genetic algorithm be restart (0 for never), to be set in Unity Editor
     [SerializeField]
-    private int RestartAfter = 100;
+    private int RestartAfter = 0;
 
     // Whether to use elitist selection or remainder stochastic sampling, to be set in Unity Editor
     [SerializeField]
@@ -75,6 +75,15 @@ public class EvolutionManager : MonoBehaviour
         get { return geneticAlgorithm.GenerationCount; }
     }
     #endregion
+
+    /// <summary>
+    /// Returns the time in seconds since the start of the current generation.
+    /// </summary>
+    public float CurrentGenerationTime
+    {
+        get { return geneticAlgorithm.timeInterval; }
+    }
+    
 
     #region Constructors
     void Awake()

@@ -41,6 +41,8 @@ public class UISimulationController : MonoBehaviour
     [SerializeField]
     private Text GenerationCount;
     [SerializeField]
+    private Text GenerationTime;
+    [SerializeField]
     private UINeuralNetworkPanel NeuralNetPanel;
     #endregion
 
@@ -66,6 +68,7 @@ public class UISimulationController : MonoBehaviour
             //Display evaluation and generation count
             Evaluation.text = Target.Agent.Genotype.Evaluation.ToString();
             GenerationCount.text = EvolutionManager.Instance.GenerationCount.ToString();
+
         }
     }
 

@@ -291,6 +291,7 @@ public class TrackManager : MonoBehaviour
             return checkpoints[curCheckpointIndex - 1].AccumulatedReward + checkpoints[curCheckpointIndex].GetRewardValue(checkPointDistance);
         }
     }
+
     #endregion
 
 }

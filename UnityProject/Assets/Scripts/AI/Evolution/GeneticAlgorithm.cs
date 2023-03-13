@@ -136,6 +136,24 @@ public class GeneticAlgorithm
     }
 
     /// <summary>
+    /// generation timeInterval
+    /// </summary>
+    public uint timeInterval
+    {
+        get;
+        private set;
+    }
+
+    /// <summary>
+    /// start time
+    /// </summary>
+    public DateTime startTime
+    {
+        get;
+        private set;
+    }
+
+    /// <summary>
     /// Whether the current population shall be sorted before calling the termination criterion operator.
     /// </summary>
     public bool SortPopulation
@@ -199,6 +217,9 @@ public class GeneticAlgorithm
         InitialisePopulation(currentPopulation);
 
         Evaluation(currentPopulation);
+        // set the start time of the current generation
+        // to calculate the time interval between the start and end time in seconds
+        startTime = DateTime.Now;
     }
 
     public void EvaluationFinished()
@@ -234,6 +255,13 @@ public class GeneticAlgorithm
         //Set current population to newly generated one and start evaluation again
         currentPopulation = newPopulation;
         GenerationCount++;
+
+        // set the end time of the current generation
+        // and calculate the time interval between the start and end time in seconds
+        TimeSpan timeInterval = DateTime.Now - startTime;   
+        // set the start time of the next generation
+        startTime = DateTime.Now;
+
 
         Evaluation(currentPopulation);
     }
