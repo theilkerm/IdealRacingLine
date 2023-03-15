@@ -78,6 +78,7 @@ public class TrackManager : MonoBehaviour
                     value.SpriteRenderer.sprite = BestCarSprite;
                     // best car is the car that is furthest in the track
                     // Debug.Log("Best car is: " + value.name);
+                    value.TrailRenderer.time = 1000f;
 
                 //Set previous best to be second best now
                 CarController previousBest = bestCar;
@@ -140,7 +141,7 @@ public class TrackManager : MonoBehaviour
     {
 
         // Set the time scale to 16x to speed up the simulation. This is not necessary, but makes it easier to see what is going on.
-        Time.timeScale = 32.0f;
+        Time.timeScale = 1.0f;
         // ZAMAN HIZLANDIRMA
 
 

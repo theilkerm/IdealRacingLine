@@ -73,6 +73,15 @@ public class CarController : MonoBehaviour
         private set;
     }
 
+    /// <summary>
+    /// The cached TrailRenderer of this car.
+    /// </summary>
+    public TrailRenderer TrailRenderer
+    {
+        get;
+        private set;
+    }
+
     private Sensor[] sensors;
     private float timeSinceLastCheckpoint;
     #endregion
@@ -84,6 +93,7 @@ public class CarController : MonoBehaviour
         Movement = GetComponent<CarMovement>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
         sensors = GetComponentsInChildren<Sensor>();
+        TrailRenderer = GetComponentInChildren<TrailRenderer>();
     }
     void Start()
     {
@@ -91,6 +101,8 @@ public class CarController : MonoBehaviour
 
         //Set name to be unique
         this.name = "Car (" + NextID + ")";
+        Debug.Log("Created car with ID " + NextID);
+
     }
     #endregion
 
@@ -114,6 +126,7 @@ public class CarController : MonoBehaviour
     void Update()
     {
         timeSinceLastCheckpoint += Time.deltaTime;
+
     }
 
     // Unity method for physics update
@@ -148,6 +161,7 @@ public class CarController : MonoBehaviour
             s.Hide();
 
         Agent.Kill();
+        Debug.Log("Killed car with ID " + NextID);
     }
 
     public void CheckpointCaptured()
