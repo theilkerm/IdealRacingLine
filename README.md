@@ -1,7 +1,29 @@
-# Applying Evolutionary Artificial Neural Networks
+# Finding Ideal Racing Line with Evolutionary Artificial Neural Networks
 
-A 2D Unity simulation in which cars learn to navigate themselves through different courses. The cars are steered by a feedforward Neural Network. The weights of the network are trained using a modified genetic algorithm.
+A 2D Unity simulation in which cars learn to navigate themselves through different courses. The cars are steered by a feedforward Neural Network. The weights of the network are trained using a modified genetic algorithm. 
+
+I forked and made changes on it to find ideal racing line in karting. 
+
+## Usage
+
+For now I'm working towards getting better lap times by lowering the MAX_CHECKPOINT_DELAY in carController.cs  [UnityProject/Assets/Scripts/Simulation/CarController.cs](UnityProject/Assets/Scripts/Simulation/CarController.cs). Basically, if we say "n" to the number of checkpoints defined in unity,
+max lap time= (n-1)*MAX_CHECKPOINT_DELAY
+we will get results.
+
+I added a Time.timeScale value to [UnityProject/Assets/Scripts/Simulation/TrackManager.cs](UnityProject/Assets/Scripts/Simulation/TrackManager.cs) to see it faster as it sometimes takes hundreds of generations to see. on my system it gives nice and visible results over 32x.
+Of course, in order to do these, you will need to model the runway via unity.
+
 Short demo video of an early version: https://youtu.be/rEDzUT3ymw4
+
+## Roadmap
+
+1. Momentarily showing the best lap time on the screen.
+
+2. After a successful round, the MAX_CHECKPOINT_DELAY value is reduced by a certain amount and a new target is set and the search for the perfect round continues.
+
+3. Displaying the race line of the fastest lap in color on the screen with TrailRenderer.
+
+4.  Coloring the race line according to acceleration or speed after the 3rd stage has been successfully completed.
 
 
 ![](Images/Demo.gif)
