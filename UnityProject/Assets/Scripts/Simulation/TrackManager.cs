@@ -141,7 +141,7 @@ public class TrackManager : MonoBehaviour
     {
 
         // Set the time scale to 16x to speed up the simulation. This is not necessary, but makes it easier to see what is going on.
-        Time.timeScale = 1.0f;
+        Time.timeScale = 32.0f;
         // ZAMAN HIZLANDIRMA
 
 
