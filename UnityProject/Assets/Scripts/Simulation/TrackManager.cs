@@ -111,6 +111,7 @@ public class TrackManager : MonoBehaviour
                     SecondBestCar.SpriteRenderer.sprite = NormalCarSprite;
                 if (value != null)
                     value.SpriteRenderer.sprite = SecondBestSprite;
+                    value.TrailRenderer.time = 100f;
 
                 secondBestCar = value;
                 if (SecondBestCarChanged != null)
@@ -187,6 +188,7 @@ public class TrackManager : MonoBehaviour
                 //Update best
                 if (BestCar == null || car.Car.CurrentCompletionReward >= BestCar.CurrentCompletionReward)
                     BestCar = car.Car;
+
                 else if (SecondBestCar == null || car.Car.CurrentCompletionReward >= SecondBestCar.CurrentCompletionReward)
                     SecondBestCar = car.Car;
             }
