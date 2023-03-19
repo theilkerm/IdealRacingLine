@@ -18,8 +18,8 @@ public class CarMovement : MonoBehaviour
     public event System.Action HitWall;
 
     //Movement constants
-    private const float MAX_VEL = 20f;
-    private const float ACCELERATION = 8f;
+    private const float MAX_VEL = 50f;
+    private const float ACCELERATION = 14f;
     private const float VEL_FRICT = 2f;
     private const float TURN_SPEED = 100;
 

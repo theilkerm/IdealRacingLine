@@ -25,7 +25,7 @@ public class CarController : MonoBehaviour
     #endregion
 
     // Maximum delay in seconds between the collection of two checkpoints until this car dies.
-    public float MAX_CHECKPOINT_DELAY = 2.98f;
+    public float MAX_CHECKPOINT_DELAY = 6.1f;
 
     /// <summary>
     /// The underlying AI agent of this car.
@@ -161,6 +161,9 @@ public class CarController : MonoBehaviour
             s.Hide();
 
         Agent.Kill();
+        // change car sprite to dead.png
+        SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/dead");
+        
         Debug.Log("Killed car with ID " + NextID);
     }
 
