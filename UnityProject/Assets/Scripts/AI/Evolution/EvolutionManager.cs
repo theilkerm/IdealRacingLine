@@ -1,4 +1,4 @@
-﻿/// Author: Samuel Arzt
+/// Author: Samuel Arzt
 /// Date: March 2017
 
 
@@ -267,7 +267,7 @@ public class EvolutionManager : MonoBehaviour
                 break;
             else
             {
-                for (int i = 0; i < (int) genotype.Fitness; i++)
+                for (int i = 0; i < (int)genotype.Fitness; i++)
                     intermediatePopulation.Add(new Genotype(genotype.GetParameterCopy()));
             }
         }
